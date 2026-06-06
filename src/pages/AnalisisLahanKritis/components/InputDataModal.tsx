@@ -19,11 +19,11 @@ const InputDataModal: React.FC<InputDataModalProps> = ({ isOpen, onClose }) => {
   if (!isOpen) return null;
 
   const formFields = [
-    { id: 'das', label: 'Input Data Daerah Aliran Sungai (DAS)' },
-    { id: 'jenis_tanah', label: 'Input Data Jenis Tanah' },
+    { id: 'das', label: 'Input Data Daerah Aliran Sungai (DAS)' }, 
     { id: 'dem', label: 'Input Data Elevation Model (DEM)' },
     { id: 'tutupan_lahan', label: 'Input Data Tutupan Lahan' },
     { id: 'curah_hujan', label: 'Input Data Curah Hujan' },
+    { id: 'zonasi', label: 'Input Data Zonasi' },
   ];
 
   return (

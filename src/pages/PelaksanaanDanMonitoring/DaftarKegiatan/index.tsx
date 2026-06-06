@@ -1,7 +1,7 @@
 import { useState, useMemo } from 'react';
 import { HiOutlinePlus, HiOutlineMagnifyingGlass } from 'react-icons/hi2';
 import ActivityCard, { type Activity } from '../components/ActivityCard';
-import InputKegiatanModal from '../components/InputKegiatanModal';
+import InputKegiatanModal from '../components/RencanaProgramModal';
 
 const DaftarKegiatan = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);

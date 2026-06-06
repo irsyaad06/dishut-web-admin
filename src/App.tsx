@@ -9,6 +9,8 @@ import VerifikasiMonitoring from './pages/PelaksanaanDanMonitoring/VerifikasiMon
 import NotFound from './pages/NotFound';
 import DataEvaluasi from './pages/EvaluasiPenanamanBibit/DataEvaluasi';
 import DashboardEvaluasi from './pages/EvaluasiPenanamanBibit/DashboardEvaluasi';
+import RekapMonitoring from './pages/PelaksanaanDanMonitoring/RekapMonitoring';
+import ProgramDonasi from './pages/RealisasiBibitDonasi/ProgramDonasi';
 
 function App() {
   return (
@@ -28,12 +30,17 @@ function App() {
           <Route path="monitoring/dashboard" element={<DashboardMonitoring />} />
           <Route path="monitoring/kegiatan" element={<DaftarKegiatan />} />
           <Route path="monitoring/verifikasi" element={<VerifikasiMonitoring />} />
+          <Route path="monitoring/rekap" element={<RekapMonitoring />} />
           {/* ENF OF MODUL 2 (PELAKSANAAN DAN MONITORING) */}
           
           {/* START OF MODUL 3 (EVALUASI PENANAMAN BIBIT) */}
           <Route path="evaluasi/dashboard" element={<DashboardEvaluasi />} />
           <Route path="evaluasi/data" element={<DataEvaluasi />} />
           {/* END OF MODUL 3 (EVALUASI PENANAMAN BIBIT) */}
+          
+          {/* START OF MODUL 4 (REALISASI BIBIT DAN DONASI) */}
+          <Route path="donasi/program" element={<ProgramDonasi />} />
+          {/* END OF MODUL 4 (REALISASI BIBIT DAN DONASI) */}
         </Route>
 
         <Route path="*" element={<NotFound />} />

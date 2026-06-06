@@ -57,7 +57,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, setIsOpen }) => {
       icon: <HiOutlineArchiveBox className="w-5 h-5" />,
       items: [
         { name: 'Dashboard Donasi', path: '/admin/donasi/dashboard' },
-        { name: 'Program Donasi', path: '/admin/donasi/program' },
+        { name: 'Data Program', path: '/admin/donasi/program' },
       ],
     },
     {
