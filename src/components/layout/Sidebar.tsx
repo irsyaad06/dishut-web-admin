@@ -56,8 +56,11 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, setIsOpen }) => {
       title: 'Realisasi Bibit dan Donasi',
       icon: <HiOutlineArchiveBox className="w-5 h-5" />,
       items: [
-        { name: 'Dashboard Donasi', path: '/admin/donasi/dashboard' },
+        { name: 'Dashboard Program', path: '/admin/donasi/dashboard' },
         { name: 'Data Program', path: '/admin/donasi/program' },
+        { name: 'Data Donatur', path: '/admin/donasi/donatur' },
+        { name: 'Pelaksana Kegiatan', path: '/admin/donasi/pelaksana-kegiatan' },
+        { name: 'Pelaporan Data', path: '/admin/donasi/pelaporan-data' },
       ],
     },
     {

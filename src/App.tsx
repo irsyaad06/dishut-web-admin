@@ -11,6 +11,7 @@ import DataEvaluasi from './pages/EvaluasiPenanamanBibit/DataEvaluasi';
 import DashboardEvaluasi from './pages/EvaluasiPenanamanBibit/DashboardEvaluasi';
 import RekapMonitoring from './pages/PelaksanaanDanMonitoring/RekapMonitoring';
 import ProgramDonasi from './pages/RealisasiBibitDonasi/ProgramDonasi';
+import DataDonatur from './pages/RealisasiBibitDonasi/DataDonatur';
 
 function App() {
   return (
@@ -40,6 +41,7 @@ function App() {
           
           {/* START OF MODUL 4 (REALISASI BIBIT DAN DONASI) */}
           <Route path="donasi/program" element={<ProgramDonasi />} />
+          <Route path="donasi/donatur" element={<DataDonatur />} />
           {/* END OF MODUL 4 (REALISASI BIBIT DAN DONASI) */}
         </Route>
 
