@@ -9,7 +9,8 @@ import {
   HiOutlineBookmark,
   HiOutlineChevronDown,
   HiOutlineChevronUp,
-  HiXMark 
+  HiXMark, 
+  HiOutlineUser
 } from 'react-icons/hi2';
 import LOGO from "@/assets/images/LogoSigapFull2.png";
 
@@ -28,6 +29,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, setIsOpen }) => {
   const navItems = [
     { name: 'Dashboard', path: '/admin/dashboard', icon: <HiOutlineHome className="w-5 h-5" /> },
     { name: 'Analisis CPI', path: '/admin/analisis-cpi', icon: <HiOutlineChartBar className="w-5 h-5" /> },
+    { name: 'Manajemen Akun', path: '/admin/manajemen-akun', icon: <HiOutlineUser className="w-5 h-5" /> },
   ];
 
   const accordionMenus = [
@@ -72,7 +74,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, setIsOpen }) => {
         { name: 'Persetujuan Investor', path: '/admin/investasi/persetujuan' },
         { name: 'Data Investor', path: '/admin/investasi/data' },
       ],
-    },
+    },    
   ];
 
   return (

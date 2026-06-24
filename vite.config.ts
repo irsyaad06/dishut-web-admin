@@ -12,7 +12,6 @@ export default defineConfig({
   VitePWA({
     registerType: 'autoUpdate',
     workbox: {
-      // Ini yang bikin UI tetep jalan pas offline
         globPatterns: ['**/*.{js,css,html,ico,png,svg}']
     },
     manifest: {
@@ -33,5 +32,14 @@ export default defineConfig({
           }
         ]
     }
-  })]
+  })],
+  server: {
+    proxy: {
+      '/api': {
+        target: 'https://user.service.unikom.my.id',
+        changeOrigin: true,
+        secure: false,
+      },
+    },
+    },
 })
