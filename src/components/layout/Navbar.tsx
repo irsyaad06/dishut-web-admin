@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { 
   HiOutlineBars3, 
   HiOutlineMagnifyingGlass, 
@@ -8,6 +9,7 @@ import {
   HiOutlineCog8Tooth,
   HiOutlineArrowRightOnRectangle
 } from 'react-icons/hi2';
+import { getUserProfile, logoutAccount } from '@/services/authService'; 
 
 interface NavbarProps {
   onMenuClick: () => void;
@@ -15,8 +17,9 @@ interface NavbarProps {
 
 const Navbar: React.FC<NavbarProps> = ({ onMenuClick }) => {
   const [isProfileOpen, setIsProfileOpen] = useState(false);
-  
+  const [userName, setUserName] = useState<string>("Loading...");
   const dropdownRef = useRef<HTMLDivElement>(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -24,17 +27,45 @@ const Navbar: React.FC<NavbarProps> = ({ onMenuClick }) => {
         setIsProfileOpen(false);
       }
     };
-
     document.addEventListener('mousedown', handleClickOutside);
     return () => {
       document.removeEventListener('mousedown', handleClickOutside);
     };
   }, []);
 
+  useEffect(() => {
+    const fetchUserData = async () => {
+      try {
+        const data = await getUserProfile();
+        const formattedName = data.nama_pengguna
+          .replace(/_/g, ' ')
+          .replace(/\b\w/g, (char) => char.toUpperCase());
+        
+        setUserName(formattedName);
+      } catch (error) {
+        console.error("Gagal memuat profil:", error);
+        setUserName("Guest"); 
+      }
+    };
+
+    fetchUserData();
+  }, []);
+
+  const handleLogout = async () => {
+  try {
+    await logoutAccount();
+  } catch (error) {
+    console.error(error);
+  } finally {
+    localStorage.removeItem("token");
+    localStorage.removeItem("user");
+    navigate("/login"); 
+  }
+};
+
   return (
     <header className="h-16 bg-white flex items-center justify-between px-4 md:px-6 border-b border-gray-100 shrink-0 z-10 relative">
       <div className="flex items-center flex-1 gap-4">
-        {/* Hamburger Menu (Mobile Only) */}
         <button 
           onClick={onMenuClick}
           className="md:hidden p-2 -ml-2 text-gray-600 hover:bg-gray-100 rounded-md transition-colors"
@@ -70,9 +101,9 @@ const Navbar: React.FC<NavbarProps> = ({ onMenuClick }) => {
             className="flex items-center gap-2 cursor-pointer hover:bg-gray-50 p-1.5 md:pr-2 md:pl-3 rounded-full md:rounded-lg transition-colors border border-transparent hover:border-gray-100"
           >
             <div className="hidden md:flex flex-col text-right">
-              <span className="text-sm font-medium text-gray-700">Admin</span>
+              <span className="text-sm font-medium text-gray-700 capitalize">{userName}</span>
             </div>
-            <img src="https://i.pravatar.cc/150?img=11" alt="Profile" className="w-8 h-8 rounded-full border border-gray-200 object-cover" />
+            <img src="https://ui-avatars.com/api/?name=Admin&background=185325&color=fff" alt="Profile" className="w-8 h-8 rounded-full border border-gray-200 object-cover" />
             <HiOutlineChevronDown className={`w-4 h-4 text-gray-600 transition-transform duration-200 ${isProfileOpen ? 'rotate-180' : ''}`} />
           </button>
 
@@ -81,7 +112,10 @@ const Navbar: React.FC<NavbarProps> = ({ onMenuClick }) => {
               
               <button 
                 className="w-full flex items-center gap-3 px-4 py-2.5 text-sm font-medium text-[#185325] hover:bg-[#D5F0DE]/40 transition-colors"
-                onClick={() => setIsProfileOpen(false)}
+                onClick={() => {
+                  setIsProfileOpen(false);
+                  navigate('/admin/profile'); 
+                }}
               >
                 <HiOutlineUser className="w-5 h-5" />
                 Profile
@@ -101,7 +135,7 @@ const Navbar: React.FC<NavbarProps> = ({ onMenuClick }) => {
                 className="w-full flex items-center gap-3 px-4 py-2.5 text-sm font-medium text-[#185325] hover:bg-red-50 hover:text-red-600 transition-colors group"
                 onClick={() => {
                   setIsProfileOpen(false);
-                  // logic buat logout
+                  handleLogout(); 
                 }}
               >
                 <HiOutlineArrowRightOnRectangle className="w-5 h-5 group-hover:text-red-600" />
@@ -111,7 +145,6 @@ const Navbar: React.FC<NavbarProps> = ({ onMenuClick }) => {
             </div>
           )}
         </div>
-        
       </div>
     </header>
   );

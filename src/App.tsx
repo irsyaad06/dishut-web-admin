@@ -13,6 +13,8 @@ import RekapMonitoring from './pages/PelaksanaanDanMonitoring/RekapMonitoring';
 import ProgramDonasi from './pages/RealisasiBibitDonasi/ProgramDonasi';
 import DataDonatur from './pages/RealisasiBibitDonasi/DataDonatur';
 import PelaksanaanKegiatan from './pages/RealisasiBibitDonasi/PelaksanaanKegiatan';
+import ManajemenAkun from './pages/ManajemenAkun';
+import Profile from './pages/Profile';
 
 function App() {
   return (
@@ -23,6 +25,8 @@ function App() {
 
         <Route path="/admin" element={<DashboardLayout />}>
           <Route index element={<Navigate to="analisis-cpi" replace />} />
+          <Route path="manajemen-akun" element={<ManajemenAkun />} />
+          <Route path="profile" element={<Profile />} />
           
           {/* START OF MODUL 1 (ANALISIS LAHAN KRITIS)*/}
           <Route path="analisis-cpi" element={<AnalisisLahanKritis />} />

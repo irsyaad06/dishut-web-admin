@@ -1,10 +1,37 @@
-import { useState } from "react";
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import InputField from "@/components/InputField";
-import Button from "@/components/Button"; // Import Button yang baru dibuat
+import Button from "@/components/Button";
 import KTHBG from "@/assets/images/KTH Monitoring 1.png";
+import { loginAccount } from "@/services/authService";
 
 const Login: React.FC = () => {
+  const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
+  const [loginInput, setLoginInput] = useState("");
+  const [password, setPassword] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
+  const handleLogin = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsLoading(true);
+    setError(null);
+
+    try {
+      const result = await loginAccount({
+        login: loginInput,
+        kata_sandi: password,
+      });
+      localStorage.setItem("token", result.payload.token);
+      localStorage.setItem("user", JSON.stringify(result.payload.user));
+      navigate("/");
+    } catch (err: any) {
+      setError(err.message);
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   return (
     <div className="min-h-screen bg-[#F5F6F6] flex items-center justify-center p-4 lg:p-8">
@@ -20,17 +47,29 @@ const Login: React.FC = () => {
             </p>
           </div>
 
-          <form onSubmit={(e) => e.preventDefault()}>
+          <form onSubmit={handleLogin}>
+            {error && (
+              <div className="mb-4 p-3 text-sm text-red-600 bg-red-100 rounded-md">
+                {error}
+              </div>
+            )}
+
             <InputField
-              label="Email Address"
-              type="email"
-              placeholder="Cth: example@gmail.com"
+              label="Email / NIP"
+              type="text"
+              placeholder="Cth: example@gmail.com atau NIP"
+              value={loginInput}
+              onChange={(e: any) => setLoginInput(e.target.value)}
+              required
             />
             
             <InputField
               label="Password"
               type={showPassword ? "text" : "password"}
               placeholder="••••••••••"
+              value={password}
+              onChange={(e: any) => setPassword(e.target.value)}
+              required
               onIconClick={() => setShowPassword(!showPassword)}
               icon={
                 showPassword ? (
@@ -47,8 +86,8 @@ const Login: React.FC = () => {
               </a>
             </div>
 
-            <Button type="submit" variant="primary">
-              Masuk
+            <Button type="submit" variant="primary" disabled={isLoading}>
+              {isLoading ? "Memproses..." : "Masuk"}
             </Button>
 
             <div className="flex items-center my-6">
