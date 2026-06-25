@@ -29,7 +29,6 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, setIsOpen }) => {
   const navItems = [
     { name: 'Dashboard', path: '/admin/dashboard', icon: <HiOutlineHome className="w-5 h-5" /> },
     { name: 'Analisis CPI', path: '/admin/analisis-cpi', icon: <HiOutlineChartBar className="w-5 h-5" /> },
-    { name: 'Manajemen Akun', path: '/admin/manajemen-akun', icon: <HiOutlineUser className="w-5 h-5" /> },
   ];
 
   const accordionMenus = [
@@ -73,6 +72,16 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, setIsOpen }) => {
         { name: 'Dashboard Transparansi dan Manajemen Investasi', path: '/admin/investasi/dashboard' },
         { name: 'Persetujuan Investor', path: '/admin/investasi/persetujuan' },
         { name: 'Data Investor', path: '/admin/investasi/data' },
+      ],
+    },    
+    {
+      id: 'manajemen-akun',
+      title: 'Manajemen Akun',
+      icon: <HiOutlineUser className="w-5 h-5" />,
+      items: [
+        { name: 'Data Pengguna', path: '/admin/manajemen-akun/data-pengguna' },
+        { name: 'Data Peran Pengguna', path: '/admin/manajemen-akun/data-peran-pengguna' },
+        { name: 'Data Hak Akses', path: '/admin/manajemen-akun/data-hak-akses' },
       ],
     },    
   ];

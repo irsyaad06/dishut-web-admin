@@ -4,6 +4,7 @@ import InputField from "@/components/InputField";
 import Button from "@/components/Button";
 import KTHBG from "@/assets/images/KTH Monitoring 1.png";
 import { loginAccount } from "@/services/authService";
+import { ToastError, ToastLoading, ToastSuccess } from "@/utils/toastHelper"; 
 
 const Login: React.FC = () => {
   const navigate = useNavigate();
@@ -11,12 +12,12 @@ const Login: React.FC = () => {
   const [loginInput, setLoginInput] = useState("");
   const [password, setPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
-    setError(null);
+    
+    const loadingId = ToastLoading("Memverifikasi kredensial...");
 
     try {
       const result = await loginAccount({
@@ -25,9 +26,11 @@ const Login: React.FC = () => {
       });
       localStorage.setItem("token", result.payload.token);
       localStorage.setItem("user", JSON.stringify(result.payload.user));
+      
+      ToastSuccess("Berhasil masuk! Mengarahkan...", loadingId);
       navigate("/");
     } catch (err: any) {
-      setError(err.message);
+      ToastError(err.message || "Gagal masuk. Periksa kembali data Anda.", loadingId);
     } finally {
       setIsLoading(false);
     }
@@ -39,21 +42,15 @@ const Login: React.FC = () => {
         
         <div className="bg-white w-full max-w-xl p-8 sm:p-10 rounded-4xl shadow-[0_8px_30px_rgb(0,0,0,0.04)]">
           <div className="text-center mb-8">
-            <h1 className="text-3xl font-bold text-primary mb-2">
+            <h1 className="text-3xl font-bold text-[#185325] mb-2">
               Selamat Datang
             </h1>
-            <p className="text-primary text-sm font-medium">
+            <p className="text-[#185325] text-sm font-medium">
               Sistem Monitoring Berbasis Bukti Lapangan
             </p>
           </div>
 
           <form onSubmit={handleLogin}>
-            {error && (
-              <div className="mb-4 p-3 text-sm text-red-600 bg-red-100 rounded-md">
-                {error}
-              </div>
-            )}
-
             <InputField
               label="Email / NIP"
               type="text"
@@ -81,7 +78,7 @@ const Login: React.FC = () => {
             />
 
             <div className="flex justify-end mb-8 -mt-2">
-              <a href="#" className="text-sm font-medium text-primary hover:underline">
+              <a href="#" className="text-sm font-medium text-[#185325] hover:underline">
                 Lupa Kata Sandi?
               </a>
             </div>
@@ -92,7 +89,7 @@ const Login: React.FC = () => {
 
             <div className="flex items-center my-6">
               <div className="flex-1 border-t border-gray-300"></div>
-              <span className="px-4 text-sm text-gray-400">Or</span>
+              <span className="px-4 text-sm text-gray-400">Atau</span>
               <div className="flex-1 border-t border-gray-300"></div>
             </div>
 

@@ -13,8 +13,14 @@ import RekapMonitoring from './pages/PelaksanaanDanMonitoring/RekapMonitoring';
 import ProgramDonasi from './pages/RealisasiBibitDonasi/ProgramDonasi';
 import DataDonatur from './pages/RealisasiBibitDonasi/DataDonatur';
 import PelaksanaanKegiatan from './pages/RealisasiBibitDonasi/PelaksanaanKegiatan';
-import ManajemenAkun from './pages/ManajemenAkun';
 import Profile from './pages/Profile';
+import DataPengguna from './pages/ManajemenAkun/DataPengguna';
+import DetailPengguna from './pages/ManajemenAkun/DataPengguna/DetailPengguna';
+import DataPeranPengguna from './pages/ManajemenAkun/DataPeranPengguna';
+import DataHakAkses from './pages/ManajemenAkun/DataHakAkses';
+import DetailRole from './pages/ManajemenAkun/DataPeranPengguna/components/DetailRole';
+import DetailHakAkses from './pages/ManajemenAkun/DataHakAkses/components/DetailHakAkses';
+import CustomToaster from './components/CustomToaster';
 
 function App() {
   return (
@@ -25,7 +31,6 @@ function App() {
 
         <Route path="/admin" element={<DashboardLayout />}>
           <Route index element={<Navigate to="analisis-cpi" replace />} />
-          <Route path="manajemen-akun" element={<ManajemenAkun />} />
           <Route path="profile" element={<Profile />} />
           
           {/* START OF MODUL 1 (ANALISIS LAHAN KRITIS)*/}
@@ -49,10 +54,20 @@ function App() {
           <Route path="donasi/donatur" element={<DataDonatur />} />
           <Route path="donasi/pelaksanaan-kegiatan" element={<PelaksanaanKegiatan />} />
           {/* END OF MODUL 4 (REALISASI BIBIT DAN DONASI) */}
+          
+          {/* START OF MANAJEMEN AKUN */}
+          <Route path="manajemen-akun/data-pengguna" element={<DataPengguna />} />
+          <Route path="manajemen-akun/data-pengguna/detail/:id" element={<DetailPengguna />} />
+          <Route path="manajemen-akun/data-peran-pengguna" element={<DataPeranPengguna />} />
+          <Route path="manajemen-akun/data-peran-pengguna/detail/:id" element={<DetailRole />} />
+          <Route path="manajemen-akun/data-hak-akses" element={<DataHakAkses />} />
+          <Route path="manajemen-akun/data-hak-akses/detail/:id" element={<DetailHakAkses />} />
+          {/* END OF MANAJEMEN AKUN */}
         </Route>
 
         <Route path="*" element={<NotFound />} />
       </Routes>
+      <CustomToaster />
     </BrowserRouter>
   );
 }
