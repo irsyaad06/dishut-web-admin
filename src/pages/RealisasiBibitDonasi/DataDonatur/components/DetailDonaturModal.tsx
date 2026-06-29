@@ -1,17 +1,6 @@
+import type { DonaturData, StatusType } from '@/utils/interface';
 import React, { useEffect } from 'react';
 import { HiOutlineXMark } from 'react-icons/hi2';
-
-type StatusType = 'Terealisasi' | 'Disalurkan' | 'Terkumpul' | 'Menunggu Verifikasi';
-
-export interface DonaturData {
-  idTransaksi: string;
-  namaDonatur: string;
-  program: string;
-  jumlahBibit: number;
-  status: StatusType;
-  tanggalDonasi?: string; // Optional field untuk detail
-  totalNominal?: number; // Optional field untuk detail
-}
 
 interface DetailDonaturModalProps {
   isOpen: boolean;

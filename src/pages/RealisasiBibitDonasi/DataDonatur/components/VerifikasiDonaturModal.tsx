@@ -1,6 +1,6 @@
+import type { DonaturData } from '@/utils/interface';
 import React, { useEffect } from 'react';
 import { HiOutlineXMark } from 'react-icons/hi2';
-import type { DonaturData } from './DetailDonaturModal';
 
 interface VerifikasiDonaturModalProps {
   isOpen: boolean;

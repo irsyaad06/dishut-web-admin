@@ -2,8 +2,9 @@ import { useState } from 'react';
 import { Search } from 'lucide-react';
 import { HiOutlineEye } from 'react-icons/hi2';
 
-import DetailDonaturModal, { type DonaturData } from './components/DetailDonaturModal';
+import DetailDonaturModal from './components/DetailDonaturModal';
 import VerifikasiDonaturModal from './components/VerifikasiDonaturModal';
+import type { DonaturData } from '@/utils/interface';
 
 type StatusType = 'Terealisasi' | 'Disalurkan' | 'Terkumpul' | 'Menunggu Verifikasi';
 

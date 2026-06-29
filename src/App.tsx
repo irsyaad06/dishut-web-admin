@@ -4,6 +4,7 @@ import './index.css';
 import CustomToaster from './components/CustomToaster';
 import PageLoader from './components/PageLoader';
 import ProtectedRoute from './components/ProtectedRoute'; 
+import DashboardProgram from './pages/RealisasiBibitDonasi/Dashboard';
 
 const Login = lazy(() => import('./pages/Authentication/Login'));
 const DashboardLayout = lazy(() => import('./components/layout/DashboardLayout'));
@@ -51,6 +52,7 @@ function App() {
               <Route path="evaluasi/data" element={<DataEvaluasi />} />
               
               {/* MODUL 4 */}
+              <Route path="donasi/dashboard" element={<DashboardProgram />} />
               <Route path="donasi/program" element={<ProgramDonasi />} />
               <Route path="donasi/donatur" element={<DataDonatur />} />
               <Route path="donasi/pelaksanaan-kegiatan" element={<PelaksanaanKegiatan />} />

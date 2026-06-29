@@ -45,3 +45,15 @@ export interface UserProfile {
   dibuat_pada: string;
   diperbarui_pada: string;
 }
+
+export type StatusType = 'Terealisasi' | 'Disalurkan' | 'Terkumpul' | 'Menunggu Verifikasi';
+
+export interface DonaturData {
+  idTransaksi: string;
+  namaDonatur: string;
+  program: string;
+  jumlahBibit: number;
+  status: StatusType;
+  tanggalDonasi?: string; 
+  totalNominal?: number; 
+}
