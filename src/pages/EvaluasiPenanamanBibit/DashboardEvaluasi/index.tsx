@@ -6,7 +6,7 @@ import {
     HiOutlineXCircle
 } from 'react-icons/hi2';
 import EvaluasiStatCard from './components/EvaluasiStatCard';
-import PetaSebaran from './components/PetaSebaran';
+import PetaSebaran from './components/PetaKegiatanEvaluasi';
 import RingkasanStatus from './components/RingkasanStatus';
 
 const DashboardEvaluasi: React.FC = () => {

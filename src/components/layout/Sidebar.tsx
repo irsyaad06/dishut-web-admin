@@ -13,6 +13,8 @@ import {
   HiOutlineUser
 } from 'react-icons/hi2';
 import LOGO from "@/assets/images/LogoSigapFull2.png";
+import { useAuth } from '@/context/AuthContext';
+import { canManageAccounts } from '@/utils/rbac';
 
 interface SidebarProps {
   isOpen: boolean;
@@ -20,6 +22,7 @@ interface SidebarProps {
 }
 
 const Sidebar: React.FC<SidebarProps> = ({ isOpen, setIsOpen }) => {
+  const { user } = useAuth();
   const [openMenu, setOpenMenu] = useState<string | null>('Monitoring');
 
   const toggleMenu = (menuId: string) => {
@@ -86,6 +89,13 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, setIsOpen }) => {
     },    
   ];
 
+    const filteredAccordionMenus = accordionMenus.filter((menu) => {
+    if(menu.id === "manajemen-akun") {
+      return canManageAccounts(user);
+    }
+    return true;
+  });
+
   return (
     <>
       {isOpen && (
@@ -132,7 +142,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, setIsOpen }) => {
             </NavLink>
           ))}
           
-          {accordionMenus.map((menu) => (
+          {filteredAccordionMenus.map((menu) => (
             <div key={menu.id} className="flex flex-col">
               <div 
                 onClick={() => toggleMenu(menu.id)}

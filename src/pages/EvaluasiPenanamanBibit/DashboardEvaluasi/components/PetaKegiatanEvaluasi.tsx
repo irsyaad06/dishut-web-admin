@@ -1,10 +1,10 @@
 import React from 'react';
 
-const PetaSebaran: React.FC = () => {
+const PetaKegiatanEvaluasi: React.FC = () => {
   return (
     <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-5 lg:col-span-2 flex flex-col h-full">
       <h2 className="text-base font-bold text-gray-800 mb-4">
-        Peta Sebaran Evaluasi Keberhasilan
+        Peta Kegiatan Evaluasi Keberhasilan
       </h2>
       
       <div className="w-full flex-1 min-h-100 md:min-h-125 bg-blue-50/50 rounded-lg border border-gray-200 overflow-hidden relative flex items-center justify-center">
@@ -24,4 +24,4 @@ const PetaSebaran: React.FC = () => {
   );
 };
 
-export default PetaSebaran;
+export default PetaKegiatanEvaluasi;
