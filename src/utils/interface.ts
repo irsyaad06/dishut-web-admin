@@ -16,6 +16,7 @@ export interface UpdateUserPayload {
   email: string;
   nip: string;
   kata_sandi?: string; 
+  peran: string;
 }
 
 export interface PermissionType {

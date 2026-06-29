@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { getAllUsers } from "@/services/authService"; 
+import { deleteUser, getAllUsers } from "@/services/authService"; 
 import type { UserProfile } from "@/utils/interface";
 import AkunTable from "./components/AkunTable";
 import AddAkunModal from "./components/AddAccountModal";
@@ -23,7 +23,6 @@ const DataPengguna: React.FC = () => {
   });
   const [isAlertLoading, setIsAlertLoading] = useState(false);
 
-  // Fetch Data
   const fetchUsers = async () => {
     try {
       setIsLoading(true);
@@ -46,22 +45,22 @@ const DataPengguna: React.FC = () => {
     setIsEditModalOpen(true);
   };
 
-  // const triggerDelete = (id: number, namaUser: string) => {
-  //   setAlertConfig({
-  //     isOpen: true,
-  //     title: "Hapus Pengguna?",
-  //     message: `Apakah Anda yakin ingin menghapus akun "${namaUser}"? Semua data yang terkait dengan akun ini akan hilang.`,
-  //     isDanger: true,
-  //     targetId: id,
-  //   });
-  // };
+  const triggerDelete = (id: number, namaUser: string) => {
+    setAlertConfig({
+      isOpen: true,
+      title: "Hapus Pengguna?",
+      message: `Apakah Anda yakin ingin menghapus akun "${namaUser}"? Semua data yang terkait dengan akun ini akan hilang.`,
+      isDanger: true,
+      targetId: id,
+    });
+  };
 
   const executeDelete = async () => {
     setIsAlertLoading(true);
     const loadingId = ToastLoading("Menghapus akun...");
 
     try {
-      // await deleteUser(alertConfig.targetId); 
+      await deleteUser(alertConfig.targetId); 
       await fetchUsers(); 
       
       ToastSuccess("Akun berhasil dihapus!", loadingId);
@@ -94,22 +93,19 @@ const DataPengguna: React.FC = () => {
         </div>
       )}
 
-      {/* Komponen Tabel */}
       <AkunTable
         data={akunList}
         isLoading={isLoading}
         onEdit={handleEditClick}
-        // onDelete={(user) => triggerDelete(user.id, user.nama_pengguna)}
+        onDelete={(user) => triggerDelete(user.id, user.nama_pengguna)}
       />
 
-      {/* Modal Tambah */}
       <AddAkunModal
         isOpen={isAddModalOpen}
         onClose={() => setIsAddModalOpen(false)}
         onSuccess={fetchUsers}
       />
 
-      {/* Modal Edit */}
       <EditAkunModal
         isOpen={isEditModalOpen}
         onClose={() => setIsEditModalOpen(false)}
@@ -117,7 +113,6 @@ const DataPengguna: React.FC = () => {
         userData={selectedUser}
       />
 
-      {/* Alert Konfirmasi Hapus */}
       <ConfirmAlert
         isOpen={alertConfig.isOpen}
         title={alertConfig.title}

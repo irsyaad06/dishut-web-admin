@@ -1,7 +1,9 @@
 import type { LoginPayload, RegisterPayload, UpdateUserPayload, UserProfile } from "@/utils/interface";
 
 
+const API_URL = import.meta.env.VITE_API_BASE_URL;
 const handleApiResponse = async (response: Response) => {
+
   const responseText = await response.text();
 
   if (responseText.trim().startsWith('<')) {
@@ -23,10 +25,14 @@ const handleApiResponse = async (response: Response) => {
 
 export const registerAccount = async (data: RegisterPayload) => {
   try {
-    const response = await fetch('/api/auth/register', {
+    const payloadToSend = {
+      ...data,
+      peran: data.peran ? [data.peran] : []
+    };
+    const response = await fetch(`${API_URL}/users`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(data),
+      body: JSON.stringify(payloadToSend),
     });
     return await handleApiResponse(response);
   } catch (error: any) {
@@ -36,7 +42,7 @@ export const registerAccount = async (data: RegisterPayload) => {
 
 export const loginAccount = async (data: LoginPayload) => {
   try {
-    const response = await fetch('/api/auth/login', {
+    const response = await fetch(`${API_URL}/auth/login`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(data),
@@ -49,7 +55,7 @@ export const loginAccount = async (data: LoginPayload) => {
 
 export const updateUser = async (id: string | number, data: UpdateUserPayload) => {
   try {
-    const response = await fetch(`/api/users/${id}`, {
+    const response = await fetch(`${API_URL}/users/${id}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
@@ -63,9 +69,18 @@ export const updateUser = async (id: string | number, data: UpdateUserPayload) =
   }
 };
 
+export const deleteUser = async (id: string | number) => {
+  try {
+    const response = await fetch(`${API_URL}/users/${id}`, { method: 'DELETE' });
+    return await handleApiResponse(response);
+  } catch (error: any) {
+    throw new Error(error.message || 'Gagal menghapus user');
+  }
+};
+
 export const getAllUsers = async (): Promise<UserProfile[]> => {
   try {
-    const response = await fetch('/api/users', {
+    const response = await fetch(`${API_URL}/users`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
@@ -93,7 +108,7 @@ export const getAllUsers = async (): Promise<UserProfile[]> => {
 
 export const getUserById = async (id: string | number): Promise<UserProfile> => {
   try {
-    const response = await fetch(`/api/users/${id}`, {
+    const response = await fetch(`${API_URL}/users/${id}`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
@@ -118,7 +133,7 @@ export const getUserProfile = async (): Promise<UserProfile> => {
     const token = localStorage.getItem("token");
     if (!token) throw new Error("Sesi telah habis, silakan login kembali.");
 
-    const response = await fetch('/api/auth/me', {
+    const response = await fetch(`${API_URL}/auth/me`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
@@ -138,7 +153,7 @@ export const logoutAccount = async (): Promise<void> => {
     const token = localStorage.getItem("token");
     if (!token) return; 
     
-    await fetch('/api/auth/logout', {
+    await fetch(`${API_URL}/auth/logout`, {
       method: 'POST', 
       headers: {
         'Content-Type': 'application/json',

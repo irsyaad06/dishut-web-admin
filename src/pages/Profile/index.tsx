@@ -62,9 +62,19 @@ const Profile: React.FC = () => {
           <h2 className="text-xl font-bold text-gray-800 capitalize">
             {profileData.nama_pengguna.replace(/_/g, ' ')}
           </h2>
-          <span className="inline-block px-3 py-1 mt-2 text-xs font-semibold text-black bg-secondary rounded-full">
-            Admin Kehutanan
-          </span>
+          <div className="flex flex-wrap gap-2 mt-2">
+            {profileData.peran && profileData.peran.length > 0 ? (
+              profileData.peran.map((role) => (
+                <span key={role.id}className="inline-block px-3 py-1 text-xs font-semibold text-black bg-secondary rounded-full uppercase tracking-wider">
+                  {role.nama}
+                </span>
+              ))
+            ) : (
+              <span className="inline-block px-3 py-1 text-xs font-semibold text-gray-500 bg-gray-100 rounded-full">
+                Belum ada peran
+              </span>
+            )}
+          </div>
 
           <div className="mt-8 grid grid-cols-1 md:grid-cols-2 gap-6">
             

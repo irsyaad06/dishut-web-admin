@@ -33,13 +33,4 @@ export default defineConfig({
         ]
     }
   })],
-  server: {
-    proxy: {
-      '/api': {
-        target: 'https://user.service.unikom.my.id',
-        changeOrigin: true,
-        secure: false,
-      },
-    },
-    },
 })
