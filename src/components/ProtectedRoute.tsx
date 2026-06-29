@@ -7,7 +7,7 @@ const ProtectedRoute: React.FC = () => {
 
   if (!token) {
     ToastError("Sesi Anda telah berakhir. Silakan masuk kembali.");
-    return <Navigate to="/login" replace />;
+    return <Navigate to="/admin/login" replace />;
   }
 
   return <Outlet />;
