@@ -28,7 +28,10 @@ const Login: React.FC = () => {
       localStorage.setItem("user", JSON.stringify(result.payload.user));
       
       ToastSuccess("Berhasil masuk! Mengarahkan...", loadingId);
-      navigate("/");
+      setTimeout(() => {
+        navigate("/");
+        window.location.reload();
+      })
     } catch (err: any) {
       ToastError(err.message || "Gagal masuk. Periksa kembali data Anda.", loadingId);
     } finally {

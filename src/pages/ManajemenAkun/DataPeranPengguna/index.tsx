@@ -75,7 +75,7 @@ const DataPeranPengguna: React.FC = () => {
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
         <div>
           <h1 className="text-2xl font-bold text-gray-800">
-            Peran Pengguna (Role)
+            Data Peran Pengguna (Role)
           </h1>
           <p className="text-sm text-gray-500 mt-1">
             Kelola data peran dan hak akses sistem SIGAP
