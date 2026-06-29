@@ -65,7 +65,7 @@ const Navbar: React.FC<NavbarProps> = ({ onMenuClick }) => {
       localStorage.removeItem("user");
       setIsLogoutLoading(false);
       setIsLogoutAlertOpen(false);
-      navigate("/login"); 
+      navigate("/admin/login"); 
     }
   };
 
