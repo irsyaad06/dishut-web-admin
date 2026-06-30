@@ -103,7 +103,7 @@ const ProgramDonasi: React.FC = () => {
             />
           </div>
           
-          <button onClick={() => {navigate('/admin/donasi/program/create')}}
+          <button onClick={() => {navigate('/admin/staff/donasi/program/create')}}
             className="bg-[#185325] hover:bg-[#123d1c] text-white px-5 py-2.5 rounded-lg text-sm font-semibold transition-colors flex items-center justify-center gap-2 shadow-sm whitespace-nowrap active:scale-95"
           >
             <HiOutlinePlus className="w-5 h-5" strokeWidth={2.5} />
