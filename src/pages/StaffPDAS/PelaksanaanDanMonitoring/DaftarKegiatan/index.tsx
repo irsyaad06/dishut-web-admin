@@ -1,12 +1,22 @@
-import { useState, useMemo } from 'react';
+import React, { useState, useMemo } from 'react';
 import { HiOutlinePlus, HiOutlineMagnifyingGlass } from 'react-icons/hi2';
-import ActivityCard, { type Activity } from '../components/ActivityCard';
 import InputKegiatanModal from '../components/RencanaProgramModal';
+import ActivityTable from '../components/ActivityTable';
 
-const DaftarKegiatan = () => {
+export interface Activity {
+  id: number;
+  title: string;
+  location: string;
+  date: string;
+  time: string;
+  progress: number;
+  author: string;
+  status: 'Berjalan' | 'Selesai' | 'Bermasalah';
+}
+
+const DaftarKegiatan: React.FC = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [activeFilter, setActiveFilter] = useState('All');
-  
   const [searchQuery, setSearchQuery] = useState('');
 
   const dummyData: Activity[] = [
@@ -57,48 +67,44 @@ const DaftarKegiatan = () => {
   const filteredData = useMemo(() => {
     return dummyData.filter((kegiatan) => {
       const matchesFilter = activeFilter === 'All' || kegiatan.status === activeFilter;
-      
       const matchesSearch = 
         kegiatan.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
         kegiatan.location.toLowerCase().includes(searchQuery.toLowerCase());
-
       return matchesFilter && matchesSearch;
     });
-  }, [dummyData, activeFilter, searchQuery]);
+  }, [activeFilter, searchQuery]);
 
   return (
-    <div className="flex flex-col gap-6 w-full">
+    <div className="flex flex-col gap-6 w-full max-w-screen-2xl mx-auto pb-8">
       
-      <div className="flex flex-col md:flex-row md:justify-between md:items-center gap-4">
+      <div className="flex flex-col md:flex-row md:justify-between md:items-end gap-4">
         <div>
-          <h1 className="text-2xl font-bold text-gray-800 mb-1">
+          <h1 className="text-2xl md:text-3xl font-bold text-gray-800 mb-1">
             Daftar Kegiatan
           </h1>
-          <p className="text-gray-500 text-sm">
-            Kelola dan monitor detail seluruh kegiatan lapangan
+          <p className="text-sm md:text-base text-gray-500">
+            Kelola dan monitor detail seluruh kegiatan lapangan.
           </p>
         </div>
         
         <button 
           onClick={() => setIsModalOpen(true)}
-          className="bg-[#185325] hover:bg-[#113d1b] text-white px-5 py-2.5 rounded-md text-sm font-semibold transition-colors flex items-center justify-center gap-2 shadow-sm w-full md:w-auto"
+          className="bg-[#185325] hover:bg-[#123d1c] text-white px-5 py-2.5 rounded-lg text-sm font-semibold transition-colors flex items-center justify-center gap-2 shadow-sm whitespace-nowrap active:scale-95"
         >
           <HiOutlinePlus className="w-5 h-5" strokeWidth={2.5} />
           Input Kegiatan
         </button>
       </div>
 
-      <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-2 md:p-3 flex flex-col xl:flex-row gap-4 justify-between items-center w-full">
+      <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-3 md:p-4 flex flex-col xl:flex-row gap-4 justify-between items-center w-full">
         <div className="relative w-full xl:max-w-md">
-          <span className="absolute inset-y-0 left-0 flex items-center pl-3 text-gray-400">
-            <HiOutlineMagnifyingGlass className="w-5 h-5" />
-          </span>
+          <HiOutlineMagnifyingGlass className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 w-5 h-5" />
           <input 
             type="text" 
             placeholder="Cari nama kegiatan atau lokasi..." 
             value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)} // Menyimpan input pencarian ke state
-            className="w-full bg-gray-50 border border-gray-200 text-sm rounded-lg pl-10 pr-4 py-2.5 focus:outline-none focus:ring-1 focus:ring-[#185325] focus:bg-white transition-all text-gray-700"
+            onChange={(e) => setSearchQuery(e.target.value)}
+            className="w-full pl-10 pr-4 py-2.5 bg-[#DCECE0]/30 border border-[#A5D6A7] rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all placeholder:text-sm text-sm text-gray-700"
           />
         </div>
 
@@ -107,10 +113,10 @@ const DaftarKegiatan = () => {
             <button
               key={filter}
               onClick={() => setActiveFilter(filter)}
-              className={`px-5 py-2 rounded-full text-sm font-medium whitespace-nowrap transition-colors border ${
+              className={`px-5 py-2 rounded-full text-xs font-bold whitespace-nowrap transition-colors border ${
                 activeFilter === filter
                   ? 'bg-[#185325] text-white border-[#185325]'
-                  : 'bg-white text-gray-600 border-gray-200 hover:bg-gray-50'
+                  : 'bg-white text-gray-500 border-gray-200 hover:bg-gray-50'
               }`}
             >
               {filter}
@@ -119,17 +125,10 @@ const DaftarKegiatan = () => {
         </div>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
-        {filteredData.length > 0 ? (
-          filteredData.map((kegiatan) => (
-            <ActivityCard key={kegiatan.id} data={kegiatan} />
-          ))
-        ) : (
-          <div className="col-span-full flex flex-col items-center justify-center py-12 bg-white rounded-xl border border-dashed border-gray-200">
-            <p className="text-gray-500 font-medium">Tidak ada kegiatan yang ditemukan.</p>
-          </div>
-        )}
-      </div>
+      <ActivityTable 
+        data={filteredData} 
+        onViewDetail={(id: number) => console.log("Buka Modal Detail untuk ID:", id)} 
+      />
 
       <InputKegiatanModal 
         isOpen={isModalOpen} 
