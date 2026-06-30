@@ -3,9 +3,11 @@ import {
   HiOutlineMapPin, 
   HiOutlineInformationCircle, 
   HiOutlineShieldCheck,
-  HiCheckCircle
+  HiCheckCircle,
+  HiXMark,
+  HiCheck
 } from 'react-icons/hi2';
-import { type Report } from '../data';
+import { type Report } from '../data'; 
 import EmptyStateDetail from './EmptyStateDetail';
 
 const ActiveDetail: React.FC<{ report: Report }> = ({ report }) => {
@@ -13,8 +15,16 @@ const ActiveDetail: React.FC<{ report: Report }> = ({ report }) => {
   
   if (!details) return <EmptyStateDetail />;
 
+  const handleApprove = () => {
+    console.log("Verifikasi Laporan ID:", report.id);
+  };
+
+  const handleReject = () => {
+    console.log("Tolak Laporan ID:", report.id);
+  };
+
   return (
-    <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 lg:p-8 flex flex-col gap-8 animate-in fade-in duration-300">
+    <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 lg:p-8 flex flex-col gap-8 animate-in fade-in duration-300 relative">
       <div>
         <h2 className="text-xl lg:text-2xl font-bold text-gray-800">{report.title}</h2>
         <p className="text-sm text-gray-400 font-medium mt-1">ID Laporan: {report.id}</p>
@@ -47,10 +57,6 @@ const ActiveDetail: React.FC<{ report: Report }> = ({ report }) => {
             <HiOutlineInformationCircle className="w-5 h-5 text-[#185325]" /> Kondisi Tanaman
           </div>
           <div className="flex gap-3">
-            {/* <div className="flex-1 bg-[#E0F7FA] rounded-xl p-4 text-center flex flex-col justify-center">
-              <span className="text-xs text-cyan-800 font-semibold mb-1">SURVIVAL</span>
-              <span className="text-2xl font-bold text-cyan-900">{details.survivalRate}</span>
-            </div> */}
             <div className="flex-1 bg-[#D5F0DE] rounded-xl p-4 text-center flex flex-col justify-center">
               <span className="text-xs text-green-800 font-semibold mb-1">KESEHATAN</span>
               <span className="text-xl font-bold text-green-900">{details.healthStatus}</span>
@@ -77,12 +83,13 @@ const ActiveDetail: React.FC<{ report: Report }> = ({ report }) => {
 
       <div>
         <div className="text-sm font-bold text-gray-800 mb-3">Verifikasi Kendala</div>
-        <div className="bg-[#FDCFBA] text-[#D85B1A] p-4 rounded-xl text-sm italic font-medium">
+        <div className="bg-[#FDCFBA]/30 text-[#D85B1A] border border-[#FDCFBA] p-4 rounded-xl text-sm italic font-medium">
           {details.kendala}
         </div>
       </div>
 
-      {report.status === 'Verified' && (
+      {/* RENDER BERDASARKAN STATUS */}
+      {report.status === 'Verified' ? (
         <div className="bg-[#E8EDE9] rounded-xl p-5 flex items-start gap-4 mt-2">
           <HiCheckCircle className="w-6 h-6 text-[#185325] shrink-0 mt-0.5" />
           <div>
@@ -92,7 +99,24 @@ const ActiveDetail: React.FC<{ report: Report }> = ({ report }) => {
             </p>
           </div>
         </div>
+      ) : (
+        <div className="flex items-center gap-3 mt-4 pt-6 border-t border-gray-100">
+          <button 
+            onClick={handleReject}
+            className="flex-1 flex items-center justify-center gap-2 px-6 py-3 border border-red-200 text-red-600 hover:bg-red-50 font-bold text-sm rounded-xl transition-colors"
+          >
+            <HiXMark className="w-5 h-5" /> Tolak Laporan
+          </button>
+          
+          <button 
+            onClick={handleApprove}
+            className="flex-1 flex items-center justify-center gap-2 px-6 py-3 bg-[#185325] hover:bg-[#123d1c] text-white font-bold text-sm rounded-xl transition-colors shadow-md shadow-[#185325]/20"
+          >
+            <HiCheck className="w-5 h-5" /> Verifikasi Laporan
+          </button>
+        </div>
       )}
+      
     </div>
   );
 };
