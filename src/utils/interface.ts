@@ -57,3 +57,14 @@ export interface DonaturData {
   tanggalDonasi?: string; 
   totalNominal?: number; 
 }
+
+export type StatusProgram = 'Aktif' | 'Selesai' | 'Menunggu Verifikasi';
+
+export interface ProgramData {
+  id: string;
+  nama: string;
+  lokasi: string;
+  jenisBibit: string[];
+  terkumpul: string;
+  status: StatusProgram;
+}

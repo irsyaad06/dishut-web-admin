@@ -3,20 +3,22 @@ import { useNavigate } from "react-router-dom";
 import InputField from "@/components/InputField";
 import Button from "@/components/Button";
 import KTHBG from "@/assets/images/KTH Monitoring 1.png";
-import { loginAccount } from "@/services/authService";
+import { getUserProfile, loginAccount } from "@/services/authService";
 import { ToastError, ToastLoading, ToastSuccess } from "@/utils/toastHelper"; 
+import { useAuth } from "@/context/AuthContext";
 
 const Login: React.FC = () => {
+  const { setUser } = useAuth();
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
   const [loginInput, setLoginInput] = useState("");
   const [password, setPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
+
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
-    
     const loadingId = ToastLoading("Memverifikasi kredensial...");
 
     try {
@@ -24,21 +26,25 @@ const Login: React.FC = () => {
         login: loginInput,
         kata_sandi: password,
       });
-      localStorage.setItem("token", result.payload.token);
-      localStorage.setItem("user", JSON.stringify(result.payload.user));
-      
-      ToastSuccess("Berhasil masuk! Mengarahkan...", loadingId);
+
+      const token = result.payload.token;
+      localStorage.setItem("token", token);
+      const fullUserProfile = await getUserProfile();
+      localStorage.setItem("user", JSON.stringify(fullUserProfile));
+      setUser(fullUserProfile); 
+
+      ToastSuccess("Berhasil masuk!", loadingId);
       setTimeout(() => {
-        navigate("/");
-        window.location.reload();
-      })
+        navigate("/admin"); 
+      }, 500);
+
     } catch (err: any) {
+      localStorage.removeItem("token");
       ToastError(err.message || "Gagal masuk. Periksa kembali data Anda.", loadingId);
     } finally {
       setIsLoading(false);
     }
-  };
-
+};
   return (
     <div className="min-h-screen bg-[#F5F6F6] flex items-center justify-center p-4 lg:p-8">
       <div className="max-w-275 w-full flex flex-col lg:flex-row items-center gap-12 lg:gap-24">

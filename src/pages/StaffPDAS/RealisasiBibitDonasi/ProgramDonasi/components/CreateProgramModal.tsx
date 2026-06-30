@@ -11,15 +11,12 @@ const BIBIT_OPTIONS = [
 ];
 
 const CreateProgramModal: React.FC<CreateProgramModalProps> = ({ isOpen, onClose }) => {
-  // State untuk mengelola pilihan bibit (multiple)
   const [selectedBibit, setSelectedBibit] = useState<string[]>([]);
-  // State untuk mengelola file gambar (hanya UI visual)
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
 
   useEffect(() => {
     if (isOpen) {
       document.body.style.overflow = 'hidden';
-      // Reset state ketika modal dibuka
       setSelectedBibit([]);
       setSelectedImage(null);
     } else {
@@ -50,7 +47,6 @@ const CreateProgramModal: React.FC<CreateProgramModalProps> = ({ isOpen, onClose
 
   return (
     <div className="fixed inset-0 z-60 flex items-center justify-center bg-slate-900/40 backdrop-blur-sm p-4 overflow-y-auto">
-      
       <div className="w-full max-w-lg bg-white rounded-3xl shadow-2xl overflow-hidden animate-in fade-in zoom-in-95 duration-200 my-8">
         
         <div className="flex items-center justify-between p-6 border-b border-slate-100">
